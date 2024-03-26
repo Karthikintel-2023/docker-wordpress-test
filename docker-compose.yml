@@ -1,0 +1,42 @@
+version: "3.9"
+services:
+  phpfpm:
+    ports:
+      - "80:80"
+    build: './build/php'
+    volumes:
+      - ./app:/var/www/html
+
+  mysql:
+    ports:
+      - "3306:3306"
+    build: './build/mysql'
+    environment:
+      MYSQL_ROOT_PASSWORD: 'mainRoot@123'
+      MYSQL_DATABASE: 'main_database'
+      MYSQL_USER: 'localwp'
+      MYSQL_PASSWORD: 'localwp@123'
+    volumes:
+      - dbData:/var/lib/mysql
+
+# Command line interface to wordpress
+  wp-cli:
+      depends_on:
+        - mysql
+      image: wordpress:cli
+      volumes:
+        - ./app:/var/www/html
+      command: ["sleep", "infinity"]  # Keeps the container running
+
+  phpmyadmin:
+    depends_on:
+      - mysql
+    image: phpmyadmin
+    ports:
+      - "8090:80"
+    environment:
+      PMA_HOST: mysql
+      MYSQL_ROOT_PASSWORD: 'mainRoot@123'
+volumes:
+  app:
+  dbData:

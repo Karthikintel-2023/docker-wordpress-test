@@ -1,0 +1,31 @@
+#!/bin/bash
+
+# Usage: ./export-db.sh CONTAINER_NAME DATABASE_NAME
+# Example: ./export-db.sh docker-local-wp_mysql_1 main_database
+
+# Get the container name and database name from the command line arguments
+CONTAINER_NAME=$1
+DATABASE_NAME=$2
+
+# Check if the container name and database name are provided
+if [ -z "$CONTAINER_NAME" ] || [ -z "$DATABASE_NAME" ]; then
+  echo "Usage: $0 CONTAINER_NAME DATABASE_NAME"
+  exit 1
+fi
+
+# Define the path where the backup file will be saved
+BACKUP_DIR="$(pwd)/backups"
+BACKUP_FILE="$BACKUP_DIR/$DATABASE_NAME-$(date +%Y%m%d-%H%M%S).sql"
+
+# Create the backups directory if it doesn't exist
+mkdir -p $BACKUP_DIR
+
+# Run mysqldump inside the container to export the database
+docker exec $CONTAINER_NAME mysqldump -u root -pmainRoot@123 $DATABASE_NAME > $BACKUP_FILE
+
+# Check if the export was successful
+if [ $? -eq 0 ]; then
+  echo "Database export successful. Backup saved to: $BACKUP_FILE"
+else
+  echo "Error: Database export failed."
+fi
