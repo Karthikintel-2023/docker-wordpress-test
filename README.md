@@ -3,6 +3,8 @@
 ***************************************************************
 # STEPS TO FOLLOW
 ***************************************************************
+
+
 # Create your project directory then go into it:
 
 mkdir -p <DockerWordpress>
@@ -10,6 +12,15 @@ go to the above created directory and execute the below mentioned command
 
 # Download the Docker Compose template:
 git clone https://github.com/Karthikintel-2023/docker-wordpress-test.git
+
+# New Project
+- Run the command `bin/freshWp` and enter the following things:
+- Enter your WordPress site name (e.g., mysite): <demo-site-name>
+- Enter your WordPress admin username: <admin-name>
+- Enter your WordPress admin password: <admin-password>
+- Enter your WordPress admin email: <admin-email>
+- Please specify a domain name (ex. example.com): <domain-used-local>
+- Is this a fresh WordPress installation? (y/n): y
 
 # Existing Project :
 - Create the `app` folder take the exisitng project setup into the `app` folder
@@ -40,3 +51,7 @@ The Below command is used for Exporting the db
  - main_databse -- Database name 
     
 - `bin/exportDb docker-local-wp_mysql_1 main_database`
+
+# For Starting and Stoping the Docker Container
+- Start the Current Containter `bin/start`
+- Stop the Current Containers `bin/stop`

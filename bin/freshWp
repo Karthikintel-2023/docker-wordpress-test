@@ -5,7 +5,7 @@ read -p "Enter your WordPress admin username: " ADMIN_USER
 read -p "Enter your WordPress admin password: " -s ADMIN_PASS
 echo
 read -p "Enter your WordPress admin email: " ADMIN_EMAIL
-read -p "Enter your WordPress DOMAIN: " WP_DOMAIN
+read -p "Please specify a domain name (ex. example.com): " WP_DOMAIN
 
 read -p "Is this a fresh WordPress installation? (y/n): " FRESH_INSTALL
 
@@ -27,12 +27,15 @@ if [ ! -d "./app" ]; then
 fi
 chmod -R 777 ./app
 
-docker-compose run --rm wp-cli core download --path=./app --locale=en_US
+# docker-compose run --rm wp-cli core download --path=./app --locale=en_US
+docker-compose run --rm wp-cli core download
 
 # mv .htaccess ./app
-CUSTOM_BASE_URL="http://$DOMAIN"
+CUSTOM_BASE_URL="http://$WP_DOMAIN"
 echo $CUSTOM_BASE_URL
+docker-compose run --rm wp-cli core config --dbname=main_database --dbuser=localwp --dbpass=localwp@123 --dbhost=mysql
+docker-compose run --rm wp-cli core install --url=$WP_DOMAIN --title=$SITE_NAME --admin_user=$ADMIN_USER --admin_password=$ADMIN_PASS --admin_email=$ADMIN_EMAIL
 docker-compose run --rm wp-cli option update home $CUSTOM_BASE_URL
 docker-compose run --rm wp-cli option update siteurl $CUSTOM_BASE_URL
-docker-compose run --rm wp-cli core config --path=./app --dbname=main_database --dbuser=localwp --dbpass=localwp@123 --dbhost=mysql
-docker-compose run --rm wp-cli core install --path=./app --url=$CUSTOM_BASE_URL --title=$SITE_NAME --admin_user=$ADMIN_USER --admin_password=$ADMIN_PASS --admin_email=$ADMIN_EMAIL
+
+
