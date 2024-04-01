@@ -14,13 +14,14 @@ go to the above created directory and execute the below mentioned command
 git clone https://github.com/Karthikintel-2023/docker-wordpress-test.git
 
 # New Project
-- Run the command `bin/freshWp` and enter the following things:
-- Enter your WordPress site name (e.g., mysite): <demo-site-name>
-- Enter your WordPress admin username: <admin-name>
-- Enter your WordPress admin password: <admin-password>
-- Enter your WordPress admin email: <admin-email>
-- Please specify a domain name (ex. example.com): <domain-used-local>
-- Is this a fresh WordPress installation? (y/n): y
+- Run the command `bin/freshWp`
+- Provide  the following things:
+    - Enter your WordPress site name (e.g., mysite):` <demo-site-name>`
+    - Enter your WordPress admin username: `<admin-name>`
+    - Enter your WordPress admin password: `<admin-password>`
+    - Enter your WordPress admin email: `<admin-email>`
+    - Please specify a domain name (ex. example.com): `<domain-used-local>`
+    - Is this a fresh WordPress installation? (y/n): `y`
 
 # Existing Project :
 - Create the `app` folder take the exisitng project setup into the `app` folder
